@@ -1,0 +1,12 @@
+/**
+  |============================
+  | include css partials with
+  | default @import url()
+  |============================
+*/
+/* Common styles */
+@import url('./reset.css');
+@import url('./base.css');
+@import url('./form.css');
+@import url('./gallery.css');
+@import 'simplelightbox/dist/simple-lightbox.min.css';

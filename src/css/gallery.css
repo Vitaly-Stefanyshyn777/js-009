@@ -1,0 +1,21 @@
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 360px);
+  grid-auto-rows: 200px;
+  column-gap: 24px;
+  row-gap: 20px;
+}
+
+.gallery-item {
+  transition: transform 0.3s ease-in-out;
+}
+
+.gallery-item:hover {
+  transform: scale(1.015);
+}
+
+.go-back {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}

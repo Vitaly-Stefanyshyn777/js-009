@@ -1,0 +1,141 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+/* Стиливання для темного ефекту */
+.gallery-image {
+  filter: brightness(0.5);
+  transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out; /* Анімація */
+}
+/* Збільшення фото в модальному вікні */
+.simple-lightbox img {
+  transform: scale(1.2); /* Масштабування на 20% */
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Збільшення зображення при наведенні */
+.gallery-image:hover {
+  transform: scale(1.1); /* Масштабування на 10% */
+  filter: brightness(0.7); /* Трохи яскравіше */
+}
+/* Темний ефект для галереї */
+.gallery-image {
+  filter: brightness(1);
+  transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+}
+
+/* Збільшення зображення при відкритті модального вікна */
+.simple-lightbox img {
+  transform: scale(1.2); /* Масштабування на 20% */
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Збільшення зображення при наведенні */
+.gallery-image:hover {
+  transform: scale(1.1); /* Масштабування на 10% */
+  filter: brightness(0.7); /* Трохи яскравіше */
+}
+
+/* Затемнення фону */
+.modal-open .gallery-item {
+    opacity: 0.2; /* Задаємо прозорість іншим елементам */
+    transition: opacity 0.3s ease;
+}
+
+/* Стилі для модального зображення */
+
+
+.simple-lightbox .sl-image img {
+  filter: brightness(0.8); /* Робить зображення темнішим */
+  transition: transform 0.3s ease-in-out; /* Плавне збільшення */
+}
+
+.simple-lightbox .sl-image img:hover {
+  transform: scale(1.05); /* Збільшує зображення при наведенні */
+}
+
+/* Зменшене зображення за замовчуванням */
+.simple-lightbox .sl-image img {
+  transform: scale(0.9); /* Початковий розмір трохи менший */
+  transition: transform 0.3s ease-in-out; /* Плавна анімація збільшення */
+}
+
+/* Збільшення зображення при відкритті модального вікна */
+.simple-lightbox .sl-image img.sl-loaded {
+  transform: scale(3); /* Повертаємо до оригінального розміру */
+}
+
+.sl-overlay {
+    background-color: rgba(0, 0, 0, 1) !important; /* Тут ви можете змінити рівень затемнення */
+}
+
+
+/* Змінюємо колір хрестика закриття */
+.sl-close {
+  color: #ffffff; /* Білий колір */
+}
+
+/* Змінюємо колір стрілок */
+.sl-prev, .sl-next {
+  color: #ffffff; /* Білий колір */
+}
+/* Змінюємо колір хрестика закриття */
+.sl-close {
+  color: #ffffff !important; /* Білий колір */
+}
+
+/* Змінюємо колір стрілок */
+.sl-prev, .sl-next {
+  color: #ffffff !important; /* Білий колір */
+}
+
+/* Змінюємо колір хрестика при наведенні */
+.sl-close:hover {
+  color: #bbbbbb !important; /* Світліший колір при наведенні */
+}
+
+/* Змінюємо колір стрілок при наведенні */
+.sl-prev:hover, .sl-next:hover {
+  color: #bbbbbb !important; /* Світліший колір при наведенні */
+}
+
+/* Додаємо плавний перехід */
+.sl-close, .sl-prev, .sl-next {
+  transition: color 0.3s ease;
+}
+
+.slbContent {
+    max-width: 100%; /* Налаштування максимальної ширини для більшого простору */
+    margin: 0 auto; /* Центрування вмісту модального вікна */
+}

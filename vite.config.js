@@ -1,48 +1,52 @@
-import { defineConfig } from 'vite';
-import { glob } from 'glob';
-import injectHTML from 'vite-plugin-html-inject';
-import FullReload from 'vite-plugin-full-reload';
-import SortCss from 'postcss-sort-media-queries';
+import { defineConfig } from "vite";
+import { glob } from "glob";
+import injectHTML from "vite-plugin-html-inject";
+import FullReload from "vite-plugin-full-reload";
+import SortCss from "postcss-sort-media-queries";
 
-export default defineConfig(({ command }) => {
+export default defineConfig(async ({ command }) => {
+  const inputFiles = await glob("./src/*.html");
+
   return {
+    // Вказуємо базовий шлях для коректної роботи на GitHub Pages
+    base: "/js-009/", // Замініть на назву вашого репозиторію
     define: {
-      [command === 'serve' ? 'global' : '_global']: {},
+      [command === "serve" ? "global" : "_global"]: {},
     },
-    root: 'src',
+    root: "src",
     build: {
       sourcemap: true,
       rollupOptions: {
-        input: glob.sync('./src/*.html'),
+        input: inputFiles.length ? inputFiles : "./src/index.html",
         output: {
           manualChunks(id) {
-            if (id.includes('node_modules')) {
-              return 'vendor';
+            if (id.includes("node_modules")) {
+              return "vendor";
             }
           },
-          entryFileNames: chunkInfo => {
-            if (chunkInfo.name === 'commonHelpers') {
-              return 'commonHelpers.js';
+          entryFileNames: "[name].js",
+          assetFileNames: (assetInfo) => {
+            if (assetInfo.name && assetInfo.name.endsWith(".html")) {
+              return "[name].[ext]";
             }
-            return '[name].js';
-          },
-          assetFileNames: assetInfo => {
-            if (assetInfo.name && assetInfo.name.endsWith('.html')) {
-              return '[name].[ext]';
-            }
-            return 'assets/[name]-[hash][extname]';
+            return "assets/[name]-[hash][extname]";
           },
         },
       },
-      outDir: '../dist',
+      outDir: "../dist",
       emptyOutDir: true,
     },
     plugins: [
       injectHTML(),
-      FullReload(['./src/**/**.html']),
+      FullReload(["./src/**/*.html"]),
       SortCss({
-        sort: 'mobile-first',
+        sort: "mobile-first",
       }),
     ],
+    optimizeDeps: {
+      include: ["vite-plugin-html-inject", "vite-plugin-full-reload"],
+      exclude: ["fsevents"],
+    },
+    logLevel: "info",
   };
 });
