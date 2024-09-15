@@ -1,37 +1,48 @@
 import { defineConfig } from "vite";
-import path from "path"; // Додано імпорт модуля path
+import injectHTML from "vite-plugin-html-inject";
+import FullReload from "vite-plugin-full-reload";
+import SortCss from "postcss-sort-media-queries";
+import glob from "glob"; // Змінено спосіб імпорту
 
-export default defineConfig(({ command }) => ({
-  base: command === "build" ? "/js-009/" : "/",
-  root: "src",
-  build: {
-    sourcemap: true,
-    outDir: "../dist",
-    emptyOutDir: true,
-    rollupOptions: {
-      input: path.resolve(__dirname, "src/index.html"), // Оновлено шлях до index.html
-      output: {
-        manualChunks(id) {
-          if (id.includes("node_modules")) {
-            return "vendor";
-          }
-        },
-        entryFileNames: "[name].js",
-        assetFileNames: (assetInfo) => {
-          if (assetInfo.name && assetInfo.name.endsWith(".html")) {
-            return "[name].[ext]";
-          }
-          return "assets/[name]-[hash][extname]";
+export default defineConfig(({ command }) => {
+  return {
+    define: {
+      [command === "serve" ? "global" : "_global"]: {},
+    },
+    root: "src",
+    build: {
+      sourcemap: true,
+      rollupOptions: {
+        input: glob.sync("./src/*.html"),
+        output: {
+          manualChunks(id) {
+            if (id.includes("node_modules")) {
+              return "vendor";
+            }
+          },
+          entryFileNames: (chunkInfo) => {
+            if (chunkInfo.name === "commonHelpers") {
+              return "commonHelpers.js";
+            }
+            return "[name].js";
+          },
+          assetFileNames: (assetInfo) => {
+            if (assetInfo.name && assetInfo.name.endsWith(".html")) {
+              return "[name].[ext]";
+            }
+            return "assets/[name]-[hash][extname]";
+          },
         },
       },
+      outDir: "../dist",
+      emptyOutDir: true,
     },
-  },
-  define: {
-    [command === "serve" ? "global" : "_global"]: {},
-  },
-  plugins: [],
-  optimizeDeps: {
-    exclude: ["fsevents"],
-  },
-  logLevel: "info",
-}));
+    plugins: [
+      injectHTML(),
+      FullReload(["./src/**/**.html"]),
+      SortCss({
+        sort: "mobile-first",
+      }),
+    ],
+  };
+});
