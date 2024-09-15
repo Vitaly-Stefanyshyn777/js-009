@@ -68,39 +68,39 @@ const images = [
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Отримуємо елемент галереї
+  console.log("DOMContentLoaded event fired"); // Додано
+
   const gallery = document.querySelector(".gallery");
+  console.log(gallery); // Додано
 
-  // Перевіряємо наявність елемента перед використанням
   if (gallery) {
-    // Додаємо розмітку галереї
     gallery.insertAdjacentHTML("beforeend", createGalleryMarkup(images));
+    console.log("Gallery markup inserted"); // Додано
 
-    // Ініціалізуємо SimpleLightbox
     const lightbox = new SimpleLightbox(".gallery a", {
       captionDelay: 250,
       captionsData: "alt",
       showCounter: false,
       overlayOpacity: 0.8, // Ступінь затемнення
     });
+    console.log("SimpleLightbox initialized"); // Додано
   } else {
     console.error("Element .gallery not found in the DOM.");
   }
 });
 
-// Функція для створення розмітки галереї
 function createGalleryMarkup(data) {
   return data
     .map(({ original, preview, description }) => {
       return `<li class="gallery-item">
-        <a class="gallery-link" href="${original}">
-          <img 
-            class="gallery-image" 
-            src="${preview}" 
-            alt="${description}" 
-          />
-        </a>
-      </li>`;
+                <a class="gallery-link" href="${original}">
+                    <img 
+                        class="gallery-image" 
+                        src="${preview}" 
+                        alt="${description}" 
+                    />
+                </a>
+            </li>`;
     })
     .join("");
 }
